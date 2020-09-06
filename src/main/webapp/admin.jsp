@@ -44,6 +44,7 @@
             <th scope="col">Two Wheeler</th>
             <th scope="col">Four Wheeler</th>
             <th scope="col">Update</th>
+            <th scope = "col"> delete </th>
           </tr>
         </thead>
         <tbody>
@@ -61,8 +62,10 @@
             <td><%= allData.get(i).getTwo_wheeler() %></td>
             <td><%= allData.get(i).getFour_wheeler() %></td>
             <td><a href="updateparking?id=<%= i %>" style="color: white;"><button type="button" class="btn btn-success mx-3">Update</button></a></td>
+            <td> <a href="deleteparking?id=<%= allData.get(i).getId() %> "> <i class="far fa-trash-alt"></i></a> </td>
           </tr>
           <% } %>
+          
           
         </tbody>
         

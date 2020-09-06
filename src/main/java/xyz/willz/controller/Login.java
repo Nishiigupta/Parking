@@ -25,9 +25,9 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		LoginDao dao = new LoginDao();
-		int id = dao.valid(username, password, buyer_seller);
+		Integer id = dao.valid(username, password, buyer_seller);
 		System.out.println(id);
-		if(id != -1) {
+		if(id != null) {
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("id", id);

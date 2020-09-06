@@ -19,6 +19,23 @@ public class ParkingsDao {
 
 	private Connection con;
 	
+	public boolean deleteParking(final Integer id) {
+		if(!isEverythingOk) return false;
+		final String sql = "DELETE FROM parkings WHERE id = ?";
+		
+		try {
+			final PreparedStatement statement = con.prepareStatement(sql);
+			statement.setInt(1, id);
+			statement.execute();
+			
+		}catch(Exception e) {
+			System.out.println("Couldn't delete the parking" + e);
+			return false;
+		}
+		return true;
+		
+	}
+	
 	public List<AdminParking> findParkings(final String address) {
 		List<AdminParking> parkings = new ArrayList<>();
 		if(isEverythingOk == false) {

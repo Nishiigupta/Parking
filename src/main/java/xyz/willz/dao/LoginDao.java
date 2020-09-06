@@ -35,9 +35,9 @@ public class LoginDao {
 		
 	}
 	
-	public int valid(String username, String password, String buyer_seller) {
+	public Integer valid(String username, String password, String buyer_seller) {
 		if(isEverythingOk == false) {
-			return -1;
+			return null;
 		}
 		
 		String sql = "select * from " + buyer_seller + " where username=? and password=?";
@@ -60,6 +60,6 @@ public class LoginDao {
 			System.out.println("in exception " + e.getMessage());
 		}
 		
-		return -1;
+		return null;
 	}
 }

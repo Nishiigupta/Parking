@@ -1,87 +1,83 @@
-package xyz.willz.features;import javax.mail.PasswordAuthentication;
-import java.util.Properties;
+package xyz.willz.features;import java.util.Properties;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
-public class Mail {
+public class Mail extends HttpServlet {
 
-    public void sendMail(String send_to) {
-    	
-Properties properties = new Properties();
-		
-		properties.put("mail.smtp.auth",true);
-		properties.put("mail.smtp.starttls.enable", true);
-		properties.put("mail.smtp.host", "smtp.gmail.com");
-		properties.put("mail.smtp.port", "587");
-    	
-		final String email = "princewillz2013@gmail.com";
-		final String password = "@MSDabangg2013";
-		
-		try {
-			Session session = Session.getInstance(properties, new Authenticator() {
-	
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(email, password);
-			}
-		});
-	
-		Message message = prepareMessage(session, email, send_to);
-		
-		try {
-			Transport.send(message);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}
-	} catch(Exception e) {
-		System.out.println(e.getMessage());
-	}
+    public void sendMail(HttpServletRequest request, HttpServletResponse response) {
     	
     	
-    	
-    	
-    	/* try {
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "localhost");
-        props.put("mail.smtp.port", "25");
-        props.put("mail.debug", "true");
-        Session session = Session.getDefaultInstance(props);
-        MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("calmbulbul22@gmail.com"));
-        Properties properties = new Properties(); 		 	
-        properties.put("mail.smtp.auth",true); 		
-        properties.put("mail.smtp.starttls.enable", true); 		properties.put("mail.smtp.host", "smtp.gmail.com"); 		properties.put("mail.smtp.port", "587");
-        message.setRecipient(RecipientType.TO, new InternetAddress(send_to));
-        message.setSubject("Notification");
-        message.setText("Successful!", "UTF-8"); // as "text/plain"
-        message.setSentDate(new Date());
-        Transport.send(message);
-    	} catch(Exception e) {
-    		System.out.println(e);
-    	} */
-    }
+    	try {
+       
+			final String from = "calmbulbul22@gmail.com";
+	        final String password = "Bittu.22";
+	        String to = "nishigupta726@gmail.com";
+	        String subject = "Congratulations your reg has been sucessuffull reg";
+	        String message = "Hii";
+
+	        Properties properties = System.getProperties();
+	        properties.put("mail.smtp.auth", "true");
+	        properties.put("mail.smtp.starttls.enable", "true");
+	        properties.put("mail.smtp.port", "587");
+
+	        if (from.contains("hotmail")) {
+	            properties.put("mail.smtp.host", "smtp.live.com");
+
+	        } else if (from.contains("gmail")) {
+	            properties.put("mail.smtp.host", "smtp.gmail.com");
+
+	        } else if (from.contains("yahoo")) {
+	            properties.put("mail.smtp.host", "smtp.mail.yahoo.com");
+
+	        } else {
+	            System.out.println("<h2 style='color:red;'>Unknown domain name!!</h2><br>"
+	                    + "<p>Please use 'Yahoo or Gmail or Hotmail'</p>");
+	        }
+	        Session session2 = Session.getDefaultInstance(properties, new javax.mail.Authenticator()
+	        {
+	            public javax.mail.PasswordAuthentication getPasswordAuthentication()
+	            {
+	            	
+	                return new javax.mail.PasswordAuthentication(from,password);
+	            }
+	        });
+
+	        try {
+	            MimeMessage mimeMessage = new MimeMessage(session2);
+	            mimeMessage.setFrom(new InternetAddress(from));
+	           
+	            
+	           	 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+	                mimeMessage.setSubject(subject);
+	                mimeMessage.setText(message);
+
+	                Transport.send(mimeMessage);
+	     
+	            
+	            
+	        } catch (MessagingException e) {
+	            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+
+	            System.out.println("<h2 style='color:red;'>Fatal Error!!</h2><br>" + "<p>" + e.getMessage() + "</p>");
+	        }
+	    	 } 
+	        catch (Exception e) { 
+	            e.printStackTrace(); 
+	        } 
+
+	    
     
-    private static Message prepareMessage(Session session, String myAccount, String receiver) {
-		try {
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(myAccount));
-			message.setRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
-			message.setSubject("Kaa re BullBulliya");
-			message.setText("Hii Hellow");
-			return message;
-		} catch(Exception e) {
-			System.out.println("error");
-		}
-		return null;
+   
 	}
 
 }

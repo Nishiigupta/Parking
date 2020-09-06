@@ -42,12 +42,17 @@ public class BookingDao {
 		
 		final String sql = "INSERT INTO bookings(parking_id, buyer_id, vehicle_type, arrival_time, departure_time, arrival_date, departure_date) values (?, ?, ?, ?, ?, ?, ?)";
 		try {
+			
 			final PreparedStatement st = con.prepareStatement(sql);
+			
 			st.setInt(1, bookingInfo.getParkingId());
+			System.out.println("print bug" + bookingInfo.getBuyerId());
 			st.setInt(2, bookingInfo.getBuyerId());
+			System.out.println("print 2");
 			st.setString(3, bookingInfo.getVehicleType());
 			st.setString(4, bookingInfo.getArrivalTime());
 			st.setString(5, bookingInfo.getDepartureTime());
+			System.out.println("print 3");
 			st.setString(6, bookingInfo.getArrivalDate());
 			st.setString(7, bookingInfo.getDepartureDate());
 			

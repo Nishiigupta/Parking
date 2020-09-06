@@ -21,16 +21,17 @@ public class BookingSuccess extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Hello");
+		
 		BookingDao bookingDao = new BookingDao();
 		
 		try {
 			HttpSession session = req.getSession();
 			BookingInfo bookingInfo = (BookingInfo)session.getAttribute("bookinginfo");
 			if(bookingDao.isEverythingOk()) {
+				
 				boolean success = bookingDao.makeBooking(bookingInfo);
 				if(success) {
-//					
+					System.out.println("hii fuckers");
 					RequestDispatcher rd = req.getRequestDispatcher("getReceipt");
 					rd.forward(req, resp);
 					
